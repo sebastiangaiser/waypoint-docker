@@ -1,0 +1,11 @@
+### IDE's ###
+**/.idea/**
+**/.vscode/**
+
+### Git ###
+.git
+.gitignore
+
+### Tools ###
+*.md
+.editorconfig
