@@ -1,5 +1,8 @@
 # waypoint-docker
 
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+
+
 In March 2021, there is no AUR (Arch User Repository) with the latest version for [Waypoint](https://www.waypointproject.io/) available.
 So I decided to let Waypoint run in a docker container instead of running a local binary.
 Right now the docker (builder) build method is <b><u>NOT</u></b> supported because of no implementation of [DIND (Docker-in-Docker)](https://github.com/jpetazzo/dind#docker-in-docker) or mounting the host docker socket into the container.
@@ -26,6 +29,13 @@ docker run --rm -it -v "$PWD:$PWD" -w $PWD -u `id -u` sebastiangaiser/waypoint w
 ```shell
 docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:$PWD" -w $PWD -u `id -u` sebastiangaiser/waypoint-docker waypoint <command>
 ```
+
+## Version matrix
+
+| Release / Waypoint | v0.2.3 |
+|:------------------:|:------:|
+| v0.1.0             | x      |
+| v0.2.0             | x      |
 
 ## How to run it without the `docker run` command?
 
