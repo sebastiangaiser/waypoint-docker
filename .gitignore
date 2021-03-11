@@ -3,4 +3,7 @@
 **/.vscode/**
 **/out/*
 
+### NPM ###
+**/node_modules/**
+
 ### Docker ###
