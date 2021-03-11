@@ -17,9 +17,9 @@ RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
-ENV DIR=/waypoint
-RUN mkdir -p $DIR
-WORKDIR $DIR
+ENV WORKDIR=/waypoint
+RUN mkdir -p $WORKDIR
+WORKDIR $WORKDIR
 
 ARG USER_NAME
 ARG USER_UID
