@@ -6,11 +6,15 @@
 .git
 .gitignore
 
-### Tools ###
-*.md
-.editorconfig
-
 ### NPM ###
 .npmrc
 package.json
 node_modules
+.husky
+
+### Tools ###
+*.md
+.editorconfig
+LICENSE
+docs
+
