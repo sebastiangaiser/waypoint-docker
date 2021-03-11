@@ -39,13 +39,26 @@ alias waypoint="~/.waypoint-cmd.sh"
 
 <u>Script:</u>
 ```shell
+#!/bin/zsh
+
 docker run --rm -it -v "$PWD:$PWD" -v "$HOME:/home/$USER" -w $PWD -u `id -u` sebastiangaiser/waypoint "$@"
 ```
 
 <b>Note:</b> This is only testet with [ZSH](https://ohmyz.sh/)
 
-## Build a new version
+<a name="development"></a>
+## Development
+
+### Build a new version of the docker image
 
 ```shell
 docker build --build-arg USER_NAME=$USER --build-arg USER_UID=$(id -u) --build-arg USER_GID=$(id -g) -t sebastiangaiser/waypoint:<version> .
+```
+
+### Build a new release
+
+For building a new release you have to `export GH_TOKEN=<PersonalAccessToken>`.
+
+```shell
+npx semantic-release --no-ci
 ```
