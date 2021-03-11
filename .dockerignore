@@ -9,3 +9,8 @@
 ### Tools ###
 *.md
 .editorconfig
+
+### NPM ###
+.npmrc
+package.json
+node_modules
