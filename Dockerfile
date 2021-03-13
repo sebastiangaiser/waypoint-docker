@@ -3,11 +3,26 @@ FROM ubuntu:$VERSION
 
 LABEL maintainer="Sebastian Gaiser <sebastian@gaiser.bayern>"
 
+ENTRYPOINT ["waypoint"]
+
+ENV WORKDIR=/waypoint
+RUN mkdir -p $WORKDIR
+WORKDIR $WORKDIR
+
 RUN apt-get update && apt-get install -y \
-	lsb-release \
-	software-properties-common \
 	curl \
-	gnupg2
+	gnupg2 \
+	lsb-release \
+	software-properties-common
+
+ARG KUBECTL_VERSION=1.20.0
+RUN curl -LO https://dl.k8s.io/release/v$KUBECTL_VERSION/bin/linux/amd64/kubectl \
+  # TODO checksum https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-kubectl-binary-with-curl-on-linux
+  # && curl -LO https://dl.k8s.io/v$KUBECTL_VERSION/bin/linux/amd64/kubectl.sha256 \
+  && install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+ARG DOCKER_VERSION=18.03.0-ce
+RUN curl -fsSL https://download.docker.com/linux/static/stable/`uname -m`/docker-$DOCKER_VERSION.tgz | tar --strip-components=1 -xz -C /usr/local/bin docker/docker
 
 ARG WAYPOINT_VERSION=0.2.3
 RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - \
@@ -17,16 +32,14 @@ RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
-ENV WORKDIR=/waypoint
-RUN mkdir -p $WORKDIR
-WORKDIR $WORKDIR
+ARG USER
+ARG DOCKER_GID
+ARG UID=1000
+ARG GID=1000
+RUN groupadd --gid $GID $USER \
+    && useradd --uid $UID --gid $GID $USER \
+    && groupadd -g $DOCKER_GID docker \
+    && usermod -aG $DOCKER_GID $USER \
+    && newgrp docker
 
-ARG USER_NAME
-ARG USER_UID
-ARG USER_GID
-RUN groupadd --gid $USER_GID $USER_NAME
-RUN useradd --uid $USER_UID --gid $USER_GID $USER_NAME
-
-ENTRYPOINT ["waypoint"]
-CMD ["version"]
-
+USER $USER
