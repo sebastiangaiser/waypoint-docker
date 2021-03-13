@@ -5,29 +5,16 @@
 
 In March 2021, there is no AUR (Arch User Repository) with the latest version for [Waypoint](https://www.waypointproject.io/) available.
 So I decided to let Waypoint run in a docker container instead of running a local binary.
-Right now the docker (builder) build method is <b><u>NOT</u></b> supported because of no implementation of [DIND (Docker-in-Docker)](https://github.com/jpetazzo/dind#docker-in-docker) or mounting the host docker socket into the container.
-
-In future there will be two versions of docker images:
-
-[1. Docker image without Docker](#without-docker)
-
-[2. Docker image with Docker](#With-Docker)
-
+This docker image is pushed to [dockerhub](https://hub.docker.com/repository/docker/sebastiangaiser/waypoint).
 
 ## Usage
 
-<a name="without-docker"></a>
-### Without Docker
+Run waypoint with the following command.
+Note that the default entrypoint is set to `waypoint`.
+So you only have to replace `<command>` with some subcommand like `version` to perform a `waypoint version`.
 
 ```shell
-docker run --rm -it -v "$PWD:$PWD" -w $PWD -u `id -u` sebastiangaiser/waypoint waypoint <command>
-```
-
-<a name="with-docker"></a>
-### With Docker
-
-```shell
-docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:$PWD" -w $PWD -u `id -u` sebastiangaiser/waypoint-docker waypoint <command>
+docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:$PWD" -w $PWD -v "$HOME:/home/$USER" --privileged sebastiangaiser/waypoint <command>
 ```
 
 ## Version matrix
@@ -36,6 +23,7 @@ docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:$PWD" 
 |:------------------:|:------:|
 | v0.1.0             | x      |
 | v0.2.0             | x      |
+| v0.3.0             | x      |
 
 ## How to run it without the `docker run` command?
 
@@ -51,7 +39,7 @@ alias waypoint="~/.waypoint-cmd.sh"
 ```shell
 #!/bin/zsh
 
-docker run --rm -it -v "$PWD:$PWD" -v "$HOME:/home/$USER" -w $PWD -u `id -u` sebastiangaiser/waypoint "$@"
+docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:$PWD" -w $PWD -v "$HOME:/home/$USER" --privileged sebastiangaiser/waypoint "$@"
 ```
 
 <b>Note:</b> This is only testet with [ZSH](https://ohmyz.sh/)
@@ -62,12 +50,12 @@ docker run --rm -it -v "$PWD:$PWD" -v "$HOME:/home/$USER" -w $PWD -u `id -u` seb
 ### Build a new version of the docker image
 
 ```shell
-docker build --build-arg USER_NAME=$USER --build-arg USER_UID=$(id -u) --build-arg USER_GID=$(id -g) -t sebastiangaiser/waypoint:<version> .
+docker build --build-arg USER=$USER --build-arg DOCKER_GID=$(cut -d: -f3 < <(getent group docker)) -t sebastiangaiser/waypoint:<version> .
 ```
 
 ### Build a new release
 
-For building a new release you have to `export GH_TOKEN=<PersonalAccessToken>`.
+For building a new release with [semantic-release](https://github.com/semantic-release/semantic-release) you have to `export GH_TOKEN=<PersonalAccessToken>`.
 
 ```shell
 npx semantic-release --no-ci
