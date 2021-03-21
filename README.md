@@ -40,7 +40,7 @@ alias waypoint="~/.waypoint-cmd.sh"
 ```shell
 #!/bin/zsh
 
-docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:$PWD" -w $PWD -v "$HOME:/home/$USER" --privileged sebastiangaiser/waypoint "$@"
+docker run --rm --name waypoint -it --network host -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:$PWD" -w $PWD -v "$HOME:/home/$USER" --privileged sebastiangaiser/waypoint "$@"
 ```
 
 <b>Note:</b> This is only testet with [ZSH](https://ohmyz.sh/)
