@@ -24,7 +24,7 @@ RUN curl -LO https://dl.k8s.io/release/v$KUBECTL_VERSION/bin/linux/amd64/kubectl
 ARG DOCKER_VERSION=18.03.0-ce
 RUN curl -fsSL https://download.docker.com/linux/static/stable/`uname -m`/docker-$DOCKER_VERSION.tgz | tar --strip-components=1 -xz -C /usr/local/bin docker/docker
 
-ARG WAYPOINT_VERSION=0.2.4
+ARG WAYPOINT_VERSION=0.3.0
 RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - \
 	&& apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
 	&& apt-get update \

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/sebastiangaiser/waypoint-docker/compare/v0.4.0...v0.5.0) (2021-04-09)
+
+
+### Features
+
+* update to waypoint version v0.3.0 ([29b8b76](https://github.com/sebastiangaiser/waypoint-docker/commit/29b8b76695f74356eb6232da2d7d4427bdd1b79d))
+
 ## [0.4.0](https://github.com/sebastiangaiser/waypoint-docker/compare/v0.3.0...v0.4.0) (2021-03-21)
 
 

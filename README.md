@@ -19,12 +19,13 @@ docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:$PWD" 
 
 ## Version matrix
 
-| Release / Waypoint | v0.2.3 | v0.2.4 |
-|:------------------:|:------:|:------:|
-| v0.1.0             | x      |        |
-| v0.2.0             | x      |        |
-| v0.3.0             | x      |        |
-| v0.4.0             |        | x      |
+| Release / Waypoint | v0.2.3 | v0.2.4 | v0.3.0 |
+|:------------------:|:------:|:------:|:------:|
+| v0.1.0             | x      |        |        |
+| v0.2.0             | x      |        |        |
+| v0.3.0             | x      |        |        |
+| v0.4.0             |        | x      |        |
+| v0.5.0             |        |        | x      |
 
 ## How to run it without the `docker run` command?
 
